@@ -1,15 +1,20 @@
 package by.itacademy;
 
+import by.itacademy.order.Order;
 import by.itacademy.purchase.Purchase;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import static by.itacademy.Constants.*;
 
 public class Main {
+
+    private static final Map<Integer, Order> orders = new LinkedHashMap<>();
+
 
     public static void main(String[] args) {
         mainMenu();
@@ -65,10 +70,16 @@ public class Main {
                 }
 
                 if (inputNumber == 3) {
-                    System.out.println("Enter 3");
+                    if(orders.isEmpty()){
+                        System.out.println("No orders");
+                    }else{
+                        for (Order value : orders.values()) {
+                            value.showPurchases();
+                        }
+                    }
                 }
 
-                if (inputNumber == 4) {
+                if (inputNumber == 0) {
                     mainMenu();
                 }
             }
@@ -81,21 +92,24 @@ public class Main {
     private static void addPurchases() {
         System.out.println("Enter purchase!");
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
+        Purchase purchases;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         try (Scanner scanner = new Scanner(System.in)) {
-
+            Order order = new Order();
             String s;
 
             while (!(s = scanner.nextLine()).equals("exit")) {
-                String[] purchases = s.split(DELIMETER);
-              String name = purchases[0];
-              LocalDate date = LocalDate.parse(purchases[1], formatter);
-              Purchase purchase = new Purchase(name, date);
-                System.out.println(purchase);
+                String[] str = s.split(DELIMETER);
+                String name = str[0];
+                LocalDate date = LocalDate.parse(str[1], formatter);
+                order.addPurchase(new Purchase(name, date));
+                orders.put(order.getId(), order);
             }
 
-            mainMenu();
+            order.showPurchases();
+
+            purchasesMenu();
 
 
         } catch (Exception e) {
@@ -109,7 +123,6 @@ public class Main {
             int inputNumber = -1;
             while (inputNumber != 4) {
                 System.out.println(ORDER_MENU);
-                System.out.println(ADD_ORDER);
                 System.out.println(REMOVE_ORDER);
                 System.out.println(SHOW_ORDER);
                 System.out.println(BACK);
@@ -123,11 +136,7 @@ public class Main {
                     System.out.println("Enter 2");
                 }
 
-                if (inputNumber == 3) {
-                    System.out.println("Enter 3");
-                }
-
-                if (inputNumber == 4) {
+                if (inputNumber == 0) {
                     mainMenu();
                 }
             }
