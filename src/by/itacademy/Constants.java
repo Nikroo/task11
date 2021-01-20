@@ -2,6 +2,8 @@ package by.itacademy;
 
 public class Constants {
     public final static String DELIMETER = "\\s+|,\\s*|\\.\\s*|\\s+|;\\s*";
+    public final static String ALL_SYMBOLS = "^.{9,20}$";
+    public final static String SRC_ORDER_FILE = "files\\order";
     public final static String MAIN_MENU = "Main menu:";
     public final static String PURCHASES = "Enter 1 to purchases";
     public final static String ORDERS = "Enter 2 to orders";
@@ -10,10 +12,12 @@ public class Constants {
     public final static String ADD_PURCHASES = "Enter 1 to add purchases";
     public final static String REMOVE_PURCHASES = "Enter 2 to remove purchases";
     public final static String SHOW_PURCHASES = "Enter 3 to show purchases";
+    public final static String UPLOAD_TO_FILE = "Enter 4 Upload to file";
     public final static String BACK = "Enter 0 back to main Menu";
     public final static String ORDER_MENU = "Order menu:";
     public final static String REMOVE_ORDER = "Enter 1 to remove order";
     public final static String SHOW_ORDER = "Enter 2 to show order";
+    public final static String SUCCESSFUL = "File has been write!";
 
 
     public final static String NULL_DISCOUNT = "-";

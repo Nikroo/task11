@@ -19,10 +19,7 @@ public class Purchase {
 
     @Override
     public String toString() {
-        return "Purchase{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", date=" + date +
-                '}';
+        return  "Name='" + name + '\'' +
+                ", date=" + date;
     }
 }

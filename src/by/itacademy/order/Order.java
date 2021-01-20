@@ -8,30 +8,45 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Order {
-    private int id;
-    //private LocalDate date;
+    private static int id;
+    private LocalDate date;
     private final Map<Integer, Purchase> purchases = new LinkedHashMap<>();
 
-    public Order() {
+    public Order(LocalDate date) {
         this.id++;
-        //this.date = date;
+        this.date = date;
     }
 
     public int getId() {
         return id;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public Map<Integer, Purchase> getPurchases() {
+        return purchases;
+    }
+
+/*    public StringBuilder getPurchases() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Integer, Purchase> entry : purchases.entrySet()) {
+            sb.append(entry.getKey()).append("; ");
+        }
+        return sb;
+    }*/
+
     public void addPurchase(Purchase purchase){
         purchases.put(purchase.getId(), purchase);
         System.out.println(purchase.getId());
     }
 
-    public void showPurchases(){
-        for (Map.Entry<Integer, Purchase> integerPurchaseEntry : purchases.entrySet()) {
-            System.out.println(integerPurchaseEntry.getValue());
-        }
+    @Override
+    public String toString() {
+        return "Order{" +
+                "OrdersDate=" + date +
+                ", purchases=" + purchases +
+                '}';
     }
-
-
-
 }
