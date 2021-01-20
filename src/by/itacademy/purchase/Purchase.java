@@ -3,12 +3,13 @@ package by.itacademy.purchase;
 import java.time.LocalDate;
 
 public class Purchase {
-    private static int id;
+    private static int count;
+    private int id;
     private String name;
     private LocalDate date;
 
     public Purchase(String name, LocalDate date) {
-        this.id++;
+        this.id = count++;
         this.name = name;
         this.date = date;
     }
@@ -17,9 +18,20 @@ public class Purchase {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
     @Override
     public String toString() {
-        return  "Name='" + name + '\'' +
-                ", date=" + date;
+        return "Purchase{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                '}';
     }
 }
