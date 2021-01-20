@@ -4,16 +4,16 @@ import by.itacademy.purchase.Purchase;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static by.itacademy.Constants.*;
 
 public class OrdersList {
 
-    private static Map<Integer, Order> orders = new LinkedHashMap<>();
+    private static List<Purchase> purchases;
+    private static Map<Order, List<Purchase>> orders = new HashMap<>();
     private static Order order;
 
     public static void addPurchases() {
@@ -22,31 +22,36 @@ public class OrdersList {
 
         Scanner scanner = new Scanner(System.in);
 
-        order = new Order(LocalDate.now());
         String s = "";
+        purchases = new ArrayList<>();
 
         while (!(s = scanner.nextLine()).equals("0")) {
             if (s.matches(ALL_SYMBOLS)) {
                 String[] str = s.split(DELIMETER);
                 String name = str[0];
                 LocalDate date = LocalDate.parse(str[1], formatter);
-                order.addPurchase(new Purchase(name, date));
-                orders.put(order.getId(), order);
+                purchases.add(new Purchase(name, date));
+
             }else{
                 System.out.println("Letters and numbers only");
             }
         }
+        orders.put(new Order(LocalDateTime.now()), purchases);
     }
 
     public static void showOrders() {
         if (orders.isEmpty()) {
             System.out.println("No orders");
         } else {
-            for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
-                //System.out.println("OrderID: " + entry.getKey() + " | " + entry.getValue());
 
-
+            for(Order order : orders.keySet()){
+                System.out.println(order + ":");
+                for (Purchase purchase : orders.get(order)){
+                    System.out.println("  " + purchase);
+                }
             }
+
+
         }
     }
 
@@ -56,13 +61,13 @@ public class OrdersList {
         StringBuilder sb = new StringBuilder();
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(src)))
         {
-            for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
+/*            for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
                 sb.append(entry.getKey()).append("; ").append(entry.getValue().getDate()).append("; ");
                 for (Order value : orders.values()) {
                     sb.append(value.getPurchases());
                 }
                 sb.append("\n");
-            }
+            }*/
 
 
 
