@@ -14,6 +14,12 @@ public class Purchase {
         this.date = date;
     }
 
+    public Purchase(int id, String name, LocalDate date) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+    }
+
     public int getId() {
         return id;
     }

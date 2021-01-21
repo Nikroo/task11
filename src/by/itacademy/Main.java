@@ -1,6 +1,7 @@
 package by.itacademy;
 
 import by.itacademy.order.OrdersList;
+import by.itacademy.purchase.PurchasesList;
 
 
 import java.util.Scanner;
@@ -32,16 +33,9 @@ public class Main {
                 }
                 inputNumber = scanner.nextInt();
 
-
-                if (inputNumber == 1) {
-                    purchasesMenu();
-                }
-                if (inputNumber == 2) {
-                    orderMenu();
-                }
-                if (inputNumber == 0) {
-                    break;
-                }
+                if (inputNumber == 1) {purchasesMenu();}
+                if (inputNumber == 2) {orderMenu();}
+                if (inputNumber == 0) {break;}
 
             }
         } catch (Exception e) {
@@ -52,7 +46,6 @@ public class Main {
     }
 
     private static void purchasesMenu() {
-
         int inputNumber = -1;
         while (inputNumber != 0) {
             System.out.println(PURCHASES_MENU);
@@ -67,31 +60,21 @@ public class Main {
             }
             inputNumber = scanner.nextInt();
 
-            if (inputNumber == 1) {
-                OrdersList.addPurchases();
-            }
-            if (inputNumber == 2) {
-                OrdersList.removePurchase();
-            }
-            if (inputNumber == 3) {
-                OrdersList.showPurchases();
-            }
-            if (inputNumber == 4) {
-                OrdersList.uploadToPurchaseFile(SRC_PURCHASE_FILE);
-            }
-            if (inputNumber == 0) {
-                break;
-            }
+            if (inputNumber == 1) {PurchasesList.addPurchases();}
+            if (inputNumber == 2) {PurchasesList.removePurchase();}
+            if (inputNumber == 3) {PurchasesList.showPurchases();}
+            if (inputNumber == 4) {PurchasesList.uploadToPurchaseFile(SRC_PURCHASE_FILE);}
+            if (inputNumber == 0) {break;}
         }
     }
 
     private static void orderMenu() {
-
         int inputNumber = -1;
         while (inputNumber != 4) {
             System.out.println(ORDER_MENU);
             System.out.println(REMOVE_ORDER);
             System.out.println(SHOW_ORDER);
+            System.out.println(DOWNLOAD_FROM_FILE);
             System.out.println(UPLOAD_TO_FILE);
             System.out.println(BACK);
             while (!scanner.hasNextInt()) {
@@ -100,17 +83,10 @@ public class Main {
             }
             inputNumber = scanner.nextInt();
 
-            if (inputNumber == 1) {
-                OrdersList.removeOrder();
-            }
-            if (inputNumber == 2) {OrdersList.showOrders();
-            }
-            if (inputNumber == 3) {
-                break;
-            }
-            if (inputNumber == 4) {
-                OrdersList.uploadToOrderFile(SRC_ORDER_FILE);
-            }
+            if (inputNumber == 1) {OrdersList.removeOrder();}
+            if (inputNumber == 2) {OrdersList.showOrders();}
+            if (inputNumber == 3) {OrdersList.downloadFromFiles(SRC_ORDER_FILE);}
+            if (inputNumber == 4) {OrdersList.uploadToOrderFile(SRC_ORDER_FILE);}
             if (inputNumber == 0) {
                 break;
             }

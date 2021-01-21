@@ -1,39 +1,21 @@
 package by.itacademy.order;
 
 import by.itacademy.purchase.Purchase;
+import by.itacademy.purchase.PurchasesList;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static by.itacademy.Constants.*;
+import static by.itacademy.purchase.PurchasesList.downloadFromPurchaseFile;
+import static by.itacademy.purchase.PurchasesList.purchases;
 
 public class OrdersList {
 
-    private static List<Purchase> purchases;
-    private static Map<Order, List<Purchase>> orders = new HashMap<>();
+    public static Map<Order, List<Purchase>> orders = new HashMap<>();
 
-    public static void addPurchases() {
-        System.out.println(ENTER_PURCHASES);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-
-        Scanner scanner = new Scanner(System.in);
-
-        String s = "";
-        purchases = new ArrayList<>();
-
-        while (!(s = scanner.nextLine()).equals("0")) {
-            if (s.matches(ALL_SYMBOLS)) {
-                String[] str = s.split(DELIMETER);
-                String name = str[0];
-                LocalDate date = LocalDate.parse(str[1], formatter);
-                purchases.add(new Purchase(name, date));
-            }else{
-                System.out.println(LETTERS_NUMBERS_SYMBOLS);
-            }
-        }
+    public static void addOrder(List<Purchase> purchases) {
         orders.put(new Order(LocalDateTime.now()), purchases);
     }
 
@@ -44,18 +26,6 @@ public class OrdersList {
 
             for(Order order : orders.keySet()){
                 System.out.println(order + ":");
-                for (Purchase purchase : orders.get(order)){
-                    System.out.println("  " + purchase);
-                }
-            }
-        }
-    }
-
-    public static void showPurchases() {
-        if (orders.isEmpty()) {
-            System.out.println("No orders");
-        } else {
-            for(Order order : orders.keySet()){
                 for (Purchase purchase : orders.get(order)){
                     System.out.println("  " + purchase);
                 }
@@ -82,21 +52,7 @@ public class OrdersList {
         }
     }
 
-    public static void removePurchase() {
-        Scanner scanner = new Scanner(System.in);
-        if (orders.isEmpty()) {
-            System.out.println(NO_ORDERS);
-        } else {
-            System.out.println(CHOSE_PURCHASE_ID);
-            int idForRemove = scanner.nextInt();
-            for(Order order : orders.keySet()){
-                orders.get(order).remove(idForRemove);
-            }
-        }
-    }
-
     public static void uploadToOrderFile(String src) {
-
         StringBuilder sb = new StringBuilder();
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(src)))
         {
@@ -122,29 +78,28 @@ public class OrdersList {
         }
     }
 
-    public static void uploadToPurchaseFile(String src) {
+    public static void downloadFromFiles(String src) {
 
-        StringBuilder sb = new StringBuilder();
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(src)))
-        {
-            if(!orders.isEmpty()) {
-                for (Order order : orders.keySet()) {
-                    for (Purchase purchase : orders.get(order)) {
-                        sb.append(purchase.getId())
-                                .append("; ")
-                                .append(purchase.getName())
-                                .append("; ")
-                                .append(purchase.getDate())
-                                .append("; ");
-                        sb.append("\n");
-                    }
+        File file = new File(src);
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        downloadFromPurchaseFile(SRC_PURCHASE_FILE);
+
+        while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] str = line.split(DELIMETER);
+                int id = Integer.parseInt(str[0]);
+                LocalDateTime date = LocalDateTime.parse(str[1]);
+                if(true) {
+                    orders.put(new Order(date), purchases);
                 }
             }
-            bw.write(String.valueOf(sb));
-            System.out.println(SUCCESSFUL);
-        }
-        catch(IOException ex){
-            System.out.println(ex.getMessage());
-        }
     }
+
+
 }

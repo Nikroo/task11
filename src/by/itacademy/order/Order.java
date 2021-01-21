@@ -12,6 +12,11 @@ public class Order {
         this.date = date;
     }
 
+    public Order(int id, LocalDateTime date) {
+        this.id = id;
+        this.date = date;
+    }
+
     public int getId() {
         return id;
     }
